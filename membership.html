@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CineBook - Membership</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f6f6f6;
+    }
+
+    header {
+      background-color: #0d253f;
+      color: white;
+      padding: 20px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      color: #00bfff;
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .main-banner {
+      background-color: #3f3f3f;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .main-banner h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .membership-section {
+      padding: 50px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .membership-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 40px;
+      width: 500px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      text-align: left;
+    }
+
+    .membership-card h2 {
+      margin-bottom: 15px;
+      color: #0d253f;
+      font-size: 28px;
+    }
+
+    .membership-card p {
+      color: #555;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .highlight-text {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-style: italic;
+      font-size: 17px;
+      color: #222;
+    }
+
+    .membership-card ul {
+      color: #333;
+      padding-left: 20px;
+      margin-bottom: 30px;
+    }
+
+    .membership-card ul li {
+      margin-bottom: 10px;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn {
+      background-color: #00bfff;
+      color: white;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #009fd1;
+    }
+
+    /* Modal styles */
+    #payment-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #payment-method {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      width: 500px;
+      max-width: 90%;
+      text-align: left;
+      position: relative;
+    }
+
+    #payment-method form {
+      margin-top: 15px;
+    }
+
+    #payment-method label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #payment-method .btn {
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 18px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
+
+    #processingMessage {
+      display: none;
+      font-size: 18px;
+      text-align: center;
+      margin-top: 20px;
+      color: #0d253f;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">CineBook</div>
+    <nav>
+      <a href="#">Movies</a>
+      <a href="#">Theaters</a>
+      <a href="#">Offers</a>
+      <a href="#">Sign In</a>
+    </nav>
+  </header>
+
+  <div class="main-banner">
+    <h1>Become a CineBook Member</h1>
+    <p>Enjoy exclusive benefits, discounts, and early access to tickets</p>
+  </div>
+
+  <section class="membership-section">
+    <div class="membership-card">
+      <h2>Premium Membership</h2>
+      <p class="highlight-text">Upgrade your movie experience with our Premium plan. Here's what you'll get:</p>
+      <ul>
+        <li>🎟️ 20% discount on every movie booking</li>
+        <li>🚀 Early access to ticket sales and special previews</li>
+        <li>🍿 Free popcorn upgrade with every visit</li>
+        <li>🎁 Monthly exclusive rewards and giveaways</li>
+        <li>🎬 Access to member-only screenings and events</li>
+        <li>📱 Priority customer support via chat & call</li>
+      </ul>
+      <p class="highlight-text">Say goodbye to sold-out shows and long queues. With CineWatch, the cinema comes to your fingertips — anytime, anywhere.</p>
+      <div class="btn-container">
+        <button class="btn" id="joinBtn">Join Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal for Payment -->
+  <div id="payment-modal">
+    <div id="payment-method">
+      <button class="close-btn" id="closeModal">&times;</button>
+      <h2>Select Payment Method</h2>
+      <p>Please choose your preferred payment method to complete your membership.</p>
+
+      <form id="paymentForm">
+        <label>
+          <input type="radio" name="payment" value="credit-card" checked>
+          Credit/Debit Card
+        </label>
+        <label>
+          <input type="radio" name="payment" value="paypal">
+          PayPal
+        </label>
+        <label>
+          <input type="radio" name="payment" value="gcash">
+          GCash
+        </label>
+        <button type="submit" class="btn">Proceed to Payment</button>
+      </form>
+
+      <div id="processingMessage">
+        🚀 Proceeding with your payment, please wait...
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const joinBtn = document.getElementById('joinBtn');
+    const paymentModal = document.getElementById('payment-modal');
+    const closeModal = document.getElementById('closeModal');
+    const paymentForm = document.getElementById('paymentForm');
+    const processingMessage = document.getElementById('processingMessage');
+
+    joinBtn.addEventListener('click', () => {
+      paymentModal.style.display = 'flex';
+    });
+
+    closeModal.addEventListener('click', () => {
+      paymentModal.style.display = 'none';
+      resetModal();
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === paymentModal) {
+        paymentModal.style.display = 'none';
+        resetModal();
+      }
+    });
+
+    paymentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      paymentForm.style.display = 'none';
+      processingMessage.style.display = 'block';
+
+      setTimeout(() => {
+        processingMessage.innerText = '✅ Payment successful! Welcome to CineBook Premium!';
+      }, 2000);
+    });
+
+    function resetModal() {
+      paymentForm.style.display = 'block';
+      processingMessage.style.display = 'none';
+      processingMessage.innerText = '🚀 Proceeding with your payment, please wait...';
+    }
+  </script>
+
+</body>
+</html>
+
